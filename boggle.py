@@ -27,8 +27,6 @@ def dans_grille(grille, mot):                               #verifie si toutes l
             if found == len(mot):                           #si a toutes les lettres proposés figurent dans la grille, alors le mot est présent
                 return position_matrix
 
-    #print(position_matrix)
-
 def est_valide(grille, lettre_1, lettre_2):
 
     #est-ce que les lettres sont adjacentes ? (on evalu cela sur la chaine letter_list passée en paramètre)
@@ -68,26 +66,54 @@ def valeur(validité) :                                              #cette fonc
 def affichage(word, point, valeur):
 
     point_affiche = '(' +str(point) + ')' 
-    valeur_affiche = "-- " + valeur                                 #valeur est l'issu du mot (rejété ou illegal) retourné par une fonction qui test si le mot existe           
+    valeur_affiche = "-- " + valeur                                      #valeur est l'issu du mot (rejété ou illegal) retourné par une fonction qui test si le mot existe           
     exit_text = [word, point_affiche, valeur_affiche] 
-    print(exit_text)
-    return
+    return exit_text
 
-def calcul_point(grille, mot):                                      #cette fonction retourne le nombre de point pour chaque mots, en fontion de leur longueur
-    if len(mot) == 3:
-        point = 1
+def calcul_point(letter_list, mot):                                      #cette fonction retourne le nombre de point pour chaque mots, en fontion de leur longueur
+    pts = 0
 
-    if len(mot) == 4:
-        point = 2
+    if len(letter_list) > 25 and len(mot) >= 7:                          #pour les grilles de taille 6x6 et plus, à partir d'une longeur de 7, les points sont attribués différenments
+        pts += 7
+            
+        for longeur in range (7,9):                                      #on traitera uniquement la longeur 7 et 9 car pour les longeurs <7, l'attribution de points est la 
+                                                                         #meme que pour une grille de taille 4x4 
+            if len(mot) >= 9:                                                         
+                point = 12                                               #pour cette grille, à partir d'une longeur 9, on a 12 points
+                return point
+            
+            if len(mot) == longeur:
+                point = pts
+                return point
+            else:
+                pts += 3                                                 #pour un mot de taille 8, on a 10 points
 
-    if len(mot) == 5:
-        point = 3
+    if len(mot) >= 8:
+        point = 10                                                       #pour toutes les grilles de taille 5x5 en decendant, un mot de taille 8 donne 10 points 
+        return point
+    
+    if len(letter_list) == 25 and len(mot) >= 6:                         #pour la grille de taille 5x5 à partir d'une longeur de 6, les points sont attribués différenments
+        pts += 4
+            
+        for longeur in range (6,8):                                      #on traitera uniquement la longeur 6 et 7 car pour les longeurs < 6, l'attribution de points est la 
+                                                                         #meme que pour une grille de taille 4x4
+            if len(mot) == longeur:
+                point = pts
+                return point
+            else:
+                pts += 2                                                 #pour un mot de taille 7, on a 6 points
 
-    if len(mot) == 6:
-        point = 5
-
-    return point
-#score = ['jouer1', '13', 'joueur2', '15', 'jouer3', '13', 'joueur4', '15', 'jouer5', '13', 'joueur6', '15'] 
+    else:                                                                #pour les grilles inférieures ou égales à la taille 4x4 ainsi que les mots de longeur 
+        for longeur in range (3,10):                                     #inférieures à 6
+            if longeur <=  5:
+                pts += 1
+            if longeur == 6:
+                pts += 2
+            if longeur == 7:
+                pts += 3
+            if len(mot) == longeur:
+                point = pts
+                return point 
 
 def max_points(score, joueurs):
 
@@ -130,7 +156,6 @@ def generer_des(taille):
 
         Dés.append(dé)
 
-    #print (Dés)
     return Dés
 
 def generer_grille(taille, Dés):
@@ -152,7 +177,7 @@ def generer_grille(taille, Dés):
             letter = lettre(D,4)                                    #choisir un caractère aléatoire du dé encours
             letter_list += letter
             
-            spot.append(colonne)  #current_spot
+            spot.append(colonne)                                    #current_spot
 
             if colonne == start:                                    #pour la prmière colonne de chaque lignes
                 word += "| " + letter
@@ -208,15 +233,15 @@ def jouer():
                         if len(p_word) >= 3:                                                    #est-ce que le mot est de la bonne taille ? (3<= longeur <=taille)
 
                             present = dans_grille(letter_list, p_word)                          #est-ce qut toutes les lettres du mot proposé sont sur la grille ?
-                            if present != 'False':
-                                validité = est_valide(letter_list, lettre_1, lettre_2)          #on veut savoir si le mot propossé est valide ou pas
+                            #if present != 'False':
+                                #validité = est_valide(letter_list, lettre_1, lettre_2)          #on veut savoir si le mot propossé est valide ou pas
 
                         #if validité : 
-                        #    point = calcul_point(letter_list, p_word)
+                        #    point = calcul_point(letter_list, p_word)                           #si le mot est valide, alors on calcul le nombre de points correspondants
 
                         #message = valeur(validité)
 
-                        #affichage(p_word, point, message)
+                        #print(affichage(p_word, point, message))
                         total_points += point
 
                 if manche == 0 :
@@ -234,11 +259,30 @@ def jouer():
     print("Le meilleur joueur est", meilleur_joueur, "avec un score de: ", meilleur_score)
         
     return 
-jouer()
+#jouer()
 
 def test():
 
-    pass
+    def test_calcul_point():
+        ma_grille = input("Nth size grid: ")
+        for i in range (4):
+            mot = input('Word: ')
+            point = calcul_point(ma_grille, mot)
+            taille_mot = len(mot)
+            taille_grille = len(ma_grille)
+
+            print("le mot de taille", taille_mot, 'donne', point, 'point(s)', 'pour une grille de taille', taille_grille)
+    test_calcul_point()
+
+    def test_max_points():
+        score = ['jouer1', '13', 'joueur2', '15', 'jouer3', '13', 'joueur4', '15', 'jouer5', '13', 'joueur6', '15']
+        print(max_points(score, 6))
+    
+    def test_dans_grille():
+        grille = 'CQDJAAEKIKSVJTFU'
+        p_word = 'CAST'
+        present = dans_grille(grille, p_word)
+        print(present)
 
 test()
 
@@ -254,9 +298,5 @@ test()
 #| J | T | F | U |
 #-----------------
 
-#grille = 'CQDJAAEKIKSVJTFU'
-#positi = '0'1'2'3'4'5'6'7'8'9'10'11'12'13'14'15'
 
-#p_word = 'CAST'
 
-#present = dans_grille(grille, p_word)
