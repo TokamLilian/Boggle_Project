@@ -2,11 +2,11 @@ import boggle
 from boggle import *
 
 taille = 4
-Des = generer_des(taille)
-letter_list = dessiner_grille(taille, Des)
-print(letter_list)
+#Des = generer_des(taille)
+#letter_list = dessiner_grille(taille, Des)
+#print(letter_list)
 
-#letter_list = ['I', 'R', 'J', 'S', 'A', 'W', 'Z', 'Y', 'H', 'V', 'C', 'D', 'J', 'L', 'X', 'P']
+letter_list = ['I', 'R', 'J', 'S', 'A', 'W', 'Z', 'Y', 'H', 'V', 'C', 'D', 'J', 'L', 'X', 'P']
 
 def test():
 
@@ -42,7 +42,7 @@ def test():
 
 
     def test_generer_des():
-        #Des = generer_des(3)
+        Des = generer_des(3)
         print(Des)
 
     #test_generer_des()
@@ -84,19 +84,13 @@ def test():
         return grille
     
 
-    def test_est_valide():
-        #grille = generer_grille(taille, letter_list)
-        #print(grille)
+    def test_verification():
+        grille = generer_grille(taille, letter_list)
+        word = 'HARTARFEDE'
+       
+        print(verification(grille, word))
 
-        word = 'HART'
-        #l = 0
-        #lettre_1 = word[l]
-        #l += 1
-        #lettre_2 = word[l]
-        lettre_1 = 'H'
-        lettre_2 = 'Z'
-        grille = ['haha']
-        est_adjacente(grille, lettre_1, lettre_2)
+    #test_verification()
 
 test()
 

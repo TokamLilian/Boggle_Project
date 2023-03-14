@@ -47,9 +47,36 @@ def get_neighboor(grille, lettre):
     return neighboor
 
 
+def verification(grille, word):                                                 #cette fonction appel le teste pour deux lettres consecutives du mot propose
+
+    lettres = [ None, None ]
+    start = 0
+    end = 2
+
+    while end <= len(word):
+        j = 0
+
+        for i in range (start, end): 
+
+            lettres [j] = word[i]
+            j += 1    
+
+        lettre_1 = lettres[0]
+        lettre_2 = lettres[1]
+
+        start += 1 
+        end += 1
+
+        if not est_adjacente(grille, lettre_1, lettre_2):
+            return False
+        
+    
+    return True
+
+
 def est_adjacente(grille, lettre_1, lettre_2):
 
-    #est-ce que les lettres sont adjacentes ?
+    #est-ce que les lettre! et lettre_2 sont adjacentes ?
     
     neighboor = get_neighboor(grille, lettre_1)
     #neighboor = [ 'F', 'A', ' G' ]                 #for debugging
@@ -211,6 +238,7 @@ def dessiner_grille (taille, Des):
         end = start + taille                                        #we go to the next dices for following lines
         
     print (seperator)
+
     return letter_list
 
 
@@ -218,13 +246,13 @@ def generer_grille(taille, letter_list):
     grille = [None] * taille
 
     for i in range (taille):
-        grille[i] = [None] * taille                 #creation de la grille
+        grille[i] = [None] * taille                                 #creation de la grille
 
-    for j in range (len(letter_list)):              #parcourir tous les elements de la liste
-        
-        row = j // taille                           #division par la largeur de la grille pour avoir le numero de la ligne
-        
-        col = j % taille                            #le reste de la division de la position de la lettre et la taille de la grille, donne le numero de la colonne
+    for j in range (len(letter_list)):                              #parcourir tous les elements de la liste
+
+        row = j // taille                                           #division par la largeur de la grille pour avoir le numero de la ligne
+
+        col = j % taille                                            #le reste de la division de la position de la lettre et la taille de la grille, donne le numero de la colonne
 
         grille[row][col] = letter_list[j]
 
@@ -246,11 +274,9 @@ def jouer():
 
         print('Partie', partie+1)
         print(" ")                                    
-                                                     #pour une nouvelle partie, les des precedents ne sont pas changes mais la grille est modifiee
-        print(" ")
 
         for manche in range(manches):
-            x = 1
+            x = 1                                                               #nous permettra de stocker au meme endroit les points d'un jouer pour une toutes les parties
 
             for player in range(joueurs):                                       #itere sur tous les joueurs presents
                 player_name = "Joueur" + str(player + 1 )
@@ -264,22 +290,23 @@ def jouer():
                         break
 
                     else:
-                        letter_list = dessiner_grille(taille, Des)
+                        letter_list = dessiner_grille(taille, Des)              #pour une nouvelle partie, les des precedents ne sont pas changes mais la grille est modifiee
                         grille = generer_grille(taille, letter_list)
                         validite = False
 
                         if len(p_word) >= 3:                                                    #est-ce que le mot est de la bonne taille ? (3<= longeur <=taille)
 
                             present = dans_grille(letter_list, p_word)                          #est-ce qut toutes les lettres du mot propose sont sur la grille ?
-                            #if present != 'False':
-                                #validite = est_adjacente(grille, lettre_1, lettre_2)          #on veut savoir si le mot proposse est valide ou pas
+                            if present != 'False':
+                                validite = verification(grille, p_word)                         #on veut savoir si le mot proposse est valide ou pas
+                                pass
 
-                        #if validite : 
-                        #    point = calcul_point(letter_list, p_word)                           #si le mot est valide, alors on calcul le nombre de points correspondants
+                            if validite : 
+                                point = calcul_point(letter_list, p_word)                           #si le mot est valide, alors on calcul le nombre de points correspondants
 
-                        #message = valeur(validite)
+                        message = valeur(validite)
 
-                        #print(affichage(p_word, point, message))
+                        print(affichage(p_word, point, message))
                         total_points += point
 
                 if manche == 0 :
