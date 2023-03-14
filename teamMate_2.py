@@ -1,5 +1,31 @@
-import boggle
-from boggle import *
+
+#Sarah Jolia Enombo Ngosso
+#Ange Lilian Tchomtchoua Tokam
+
+#Boggle.py qui simulte le jeux de boggle à plusieurs joueurs
+import random
+
+
+def affichage(word, point, valeur):
+
+    point_affiche = '(' +str(point) + ')' 
+    valeur_affiche = "-- " + valeur                                      #valeur est l'issu du mot (rejete ou illegal) retourne par une fonction qui test si le mot existe           
+    exit_text = [word, point_affiche, valeur_affiche] 
+    return exit_text
+
+                                  #pour toutes les grilles de taille 5x5 en decendant, un mot de taille 8 donne 10 points 
+        return point
+
+def lettre (alphabet, longeur):                                       #cette fonction retourne une lettre aleatoire de la chaine passee en paramètre
+    rand = True
+    while rand:                                                       #on veut aumoins une valeur de position inferieure à la longeur de la chaine
+        
+        position = int(30*random.random())                            #pour pouvoir couvrir l'autre moitie de la chaine
+        if position < longeur:
+            rand = False
+
+    letter = alphabet[position]
+    return letter
 
 def verification(grille,mot):
     if not est_valide(grille, mot):
