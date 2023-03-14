@@ -16,17 +16,23 @@ def verification(grille,mot):
             mots_joueur1(mot)
             else:
                 mots_joueur2(mot)
-                
+
+def test_grille(grille,mot)
+    assert grille(grille) ==found, joueur_actuel,mot "true"
+    assert grille(mot) <3 ==..., joueur_actuel, mot, "Mot trop court"
+    
+def test_affichage(mot,point,valeur)
+    assert affichage(point) == "(' +str(point) + ')", point
+    assert affichage(valeur) == "-- " + valeur, valeur
+    assert affichage(point,valeur) == "(' +str(point) + ')","-- " + valeur, exit_text
+                  
 def test_validite()
     assert validite(mot) == mots_refuses, joueur_actuel, mot, "false"
     assert validite(grille) == mot_refuses, joueur_actuel, mot, "mot non present sur la grille"
     assert validite(mot) == mot_refuses, joeur_actuel, mot, "Mot déjà proposé"
-    
-def test_taille(mot)
-    assert taille len(mot) < 3, joueur_actuel, mot, "Mot trop court"
+         
+def test_calcul_point(lettre,grille,mot)
+    assert
            
-
-           
-
 
       
