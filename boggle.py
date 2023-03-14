@@ -4,11 +4,11 @@
 #Boggle.py qui simulte le jeux de boggle à plusieurs joueurs
 import random
 
-def dans_grille(grille, mot):                               #verifie si toutes les lettre du mot proposé sont dans la grille
-    position_matrix = []                                    #contient toutes les positions où on se trouve les lettre du mots proposé, dans la grille
-    found = 0                                               #le nombre de lettre trouvées
+def dans_grille(grille, mot):                               #verifie si toutes les lettre du mot propose sont dans la grille
+    position_matrix = []                                    #contient toutes les positions où on trouve les lettre du mots propose, dans la grille
+    found = 0                                               #le nombre de lettre trouvees
 
-    for lettre_m in mot:                                    #on cherche si toutes les lettres du mot proposé sont dans la grille
+    for lettre_m in mot:                                    #on cherche si toutes les lettres du mot propose sont dans la grille
         grid_position = 0                                   #la position de la lettre dans la grille
 
         for lettre_g in grille:
@@ -20,17 +20,16 @@ def dans_grille(grille, mot):                               #verifie si toutes l
 
             grid_position += 1
 
-            if grid_position == len(grille) - 1:            #si on est à la dernière lettre de la grille et toutes les lettres proposées n'ont pas été 
-                if found < len(mot):                        #trouvés, alors on s'arrete
+            if grid_position == len(grille) - 1:            #si on est à la dernière lettre de la grille et toutes les lettres proposees n'ont pas ete 
+                if found < len(mot):                        #trouves, alors on s'arrete
                     return False
 
-            if found == len(mot):                           #si a toutes les lettres proposés figurent dans la grille, alors le mot est présent
+            if found == len(mot):                           #si a toutes les lettres proposes figurent dans la grille, alors le mot est present
                 return position_matrix
+            
+def get_neighboor(grille, lettre):
+    neighboor = ""
 
-def est_valide(grille, lettre_1, lettre_2):
-
-    #est-ce que les lettres sont adjacentes ? (on evalu cela sur la chaine letter_list passée en paramètre)
-    
     #trouver la position de la lettre sur la grille
 
     #les lettres de la premiere colonne 
@@ -43,17 +42,30 @@ def est_valide(grille, lettre_1, lettre_2):
     #position%taille = 2
 
     #les lettres de la derniere colonne 
-    #position%taille = taille-1    
+    #position%taille = taille-1
+
+    return neighboor
 
 
+def est_adjacente(grille, lettre_1, lettre_2):
+
+    #est-ce que les lettres sont adjacentes ?
+    
+    neighboor = get_neighboor(grille, lettre_1)
+    #neighboor = [ 'F', 'A', ' G' ]                 #for debugging
+    position = 0
+    
+    for sample in neighboor:
+        position += 1
+
+        if lettre_2 == sample:
+            return True
+        if position == len(neighboor):
+            return False
 
 
-    validité = True
-
-    return validité
-
-def valeur(validité) :                                              #cette fonction retourne le message du resulat après la proposition du joueur
-    #if validité :
+def valeur(validite) :                                              #cette fonction retourne le message du resulat après la proposition du joueur
+    #if validite :
         #est-ce que le mot existe ?
             #valeur = 'ok'
         #sinon
@@ -63,17 +75,19 @@ def valeur(validité) :                                              #cette fonc
     
     return #valeur
 
+
 def affichage(word, point, valeur):
 
     point_affiche = '(' +str(point) + ')' 
-    valeur_affiche = "-- " + valeur                                      #valeur est l'issu du mot (rejété ou illegal) retourné par une fonction qui test si le mot existe           
+    valeur_affiche = "-- " + valeur                                      #valeur est l'issu du mot (rejete ou illegal) retourne par une fonction qui test si le mot existe           
     exit_text = [word, point_affiche, valeur_affiche] 
     return exit_text
+
 
 def calcul_point(letter_list, mot):                                      #cette fonction retourne le nombre de point pour chaque mots, en fontion de leur longueur
     pts = 0
 
-    if len(letter_list) > 25 and len(mot) >= 7:                          #pour les grilles de taille 6x6 et plus, à partir d'une longeur de 7, les points sont attribués différenments
+    if len(letter_list) > 25 and len(mot) >= 7:                          #pour les grilles de taille 6x6 et plus, à partir d'une longeur de 7, les points sont attribues differenments
         pts += 7
             
         for longeur in range (7,9):                                      #on traitera uniquement la longeur 7 et 9 car pour les longeurs <7, l'attribution de points est la 
@@ -92,7 +106,8 @@ def calcul_point(letter_list, mot):                                      #cette 
         point = 10                                                       #pour toutes les grilles de taille 5x5 en decendant, un mot de taille 8 donne 10 points 
         return point
     
-    if len(letter_list) == 25 and len(mot) >= 6:                         #pour la grille de taille 5x5 à partir d'une longeur de 6, les points sont attribués différenments
+    
+    if len(letter_list) == 25 and len(mot) >= 6:                         #pour la grille de taille 5x5 à partir d'une longeur de 6, les points sont attribues differenments
         pts += 4
             
         for longeur in range (6,8):                                      #on traitera uniquement la longeur 6 et 7 car pour les longeurs < 6, l'attribution de points est la 
@@ -103,8 +118,8 @@ def calcul_point(letter_list, mot):                                      #cette 
             else:
                 pts += 2                                                 #pour un mot de taille 7, on a 6 points
 
-    else:                                                                #pour les grilles inférieures ou égales à la taille 4x4 ainsi que les mots de longeur 
-        for longeur in range (3,10):                                     #inférieures à 6
+    else:                                                                #pour les grilles inferieures ou egales à la taille 4x4 ainsi que les mots de longeur 
+        for longeur in range (3,10):                                     #inferieures à 6
             if longeur <=  5:
                 pts += 1
             if longeur == 6:
@@ -113,26 +128,29 @@ def calcul_point(letter_list, mot):                                      #cette 
                 pts += 3
             if len(mot) == longeur:
                 point = pts
+
                 return point 
+            
 
 def max_points(score, joueurs):
 
-    max_point = score[1]                                              #de base, on pose le meilleur score comme étant celui du premier joueur
+    max_point = score[1]                                              #de base, on pose le meilleur score comme etant celui du premier joueur
 
-    for current_point in range (1,joueurs*2, 2):                      #les différents points sont écris en position impaires dans la liste "score"
+    for current_point in range (1,joueurs*2, 2):                      #les differents points sont ecris en position impaires dans la liste "score"
 
         if score[current_point] > max_point :                         #on compare les points pour avoir le plus grand
             max_point = score[current_point]
 
-    player = score[current_point-1]                                   #le nom du joueur est écris juste avant ses points, dans la liste "score"
+    player = score[current_point-1]                                   #le nom du joueur est ecris juste avant ses points, dans la liste "score"
 
     return max_point, player
 
-def lettre (alphabet, longeur):                                       #cette fonction retourne une lettre aléatoire de la chaine passée en paramètre
+
+def lettre (alphabet, longeur):                                       #cette fonction retourne une lettre aleatoire de la chaine passee en paramètre
     rand = True
-    while rand:                                                       #on veut aumoins une valeur de position inférieure à la longeur de la chaine
+    while rand:                                                       #on veut aumoins une valeur de position inferieure à la longeur de la chaine
         
-        position = int(30*random.random())                            #pour pouvoir couvrir l'autre moitié de la chaine
+        position = int(30*random.random())                            #pour pouvoir couvrir l'autre moitie de la chaine
         if position < longeur:
             rand = False
 
@@ -141,41 +159,43 @@ def lettre (alphabet, longeur):                                       #cette fon
 
 
 def generer_des(taille):
-    #on va faire des structures pour les différents dés et l'affichage aleatoires des elements pour chaque dé
+    #on va faire des structures pour les differents des et l'affichage aleatoires des elements pour chaque de
     
     alphabet = [ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' ]
-    Dés = []                                                        #la liste de tous les dés de la partie
+    Des = []                                                        #la liste de tous les des de la partie
 
-    nombre_de = taille **2                                          #le nombre total de dés présents
+    nombre_de = taille **2                                          #le nombre total de des presents
 
-    for _ in range(nombre_de):                                      #ittere sur les différents dés
-        dé = []
+    for _ in range(nombre_de):                                      #ittere sur les differents des
+        de = []
 
-        for face in range (4):                                      #ittere sur les différentes faces du dé
-            dé.append(lettre(alphabet,26))                          #chaque face égale à une lettre aléatoire
+        for face in range (6):                                      #ittere sur les differentes six faces du de
+            de.append(lettre(alphabet, 26))                         #chaque face egale à une lettre aleatoire
 
-        Dés.append(dé)
+        Des.append(de)
 
-    return Dés
+    return Des
 
-def generer_grille(taille, Dés):
 
-    seperator = "-"*((taille*4) +1) 
+def dessiner_grille (taille, Des):
+
+    seperator = "-"* ((taille*4) +1) 
 
     start = 0                                                       #the first line is made up of random letters from the first dices
     end = taille
     spot = []                                                       #the set of coordinates of every letter on the grid
 
-    letter_list = ""
+    letter_list = []
 
     for ligne in range(taille):                                     #les lignes de la grille
-        word = ""                                                   #la chaine qui sera imprimée pour chaque ligne     
+        word = ""                                                   #la chaine qui sera imprimee pour chaque ligne     
 
         for colonne in range (start, end):                          #les colonnes de la grille
-            D = Dés[colonne] 
+            D = Des[colonne] 
 
-            letter = lettre(D,4)                                    #choisir un caractère aléatoire du dé encours
-            letter_list += letter
+            letter = lettre(D,6)                                    #choisir un caractère aleatoire dans le de encours
+            #letter_list += letter                                  #we use this if we want to use letter_list = ""
+            letter_list.append(letter)
             
             spot.append(colonne)                                    #current_spot
 
@@ -193,53 +213,71 @@ def generer_grille(taille, Dés):
     print (seperator)
     return letter_list
 
+
+def generer_grille(taille, letter_list):            
+    grille = [None] * taille
+
+    for i in range (taille):
+        grille[i] = [None] * taille                 #creation de la grille
+
+    for j in range (len(letter_list)):              #parcourir tous les elements de la liste
+        
+        row = j // taille                           #division par la largeur de la grille pour avoir le numero de la ligne
+        
+        col = j % taille                            #le reste de la division de la position de la lettre et la taille de la grille, donne le numero de la colonne
+
+        grille[row][col] = letter_list[j]
+
+    return grille
+
+
 def jouer():
-    taille = int(input('Entrer le nombre de lignes souhaité: '))
+    taille = int(input('Entrer le nombre de lignes souhaite: '))
     nombre_parties = int(input('Combien de parties souhaitez vous jouer ? '))
     manches = int(input('En combien de manches souhaitez vous jouer ? '))
-    joueurs = int(input('Combien de joueurs sont présents ? '))
+    joueurs = int(input('Combien de joueurs sont presents ? '))
 
-    
     total_points = 0
 
     for partie in range(nombre_parties): 
         score = []
         if partie == 0:
-            Dés = generer_des(taille)                                           #pour les prochaine parties, les dés ne doivent pas etre changés
+            Des = generer_des(taille)                                           #pour les prochaine parties, les des ne doivent pas etre changes
 
         print('Partie', partie+1)
         print(" ")                                    
-        generer_grille(taille, Dés)                                             #pour une nouvelle partie, les dés précédents ne sont pas changés mais la grille est modifiée
+                                                     #pour une nouvelle partie, les des precedents ne sont pas changes mais la grille est modifiee
         print(" ")
 
         for manche in range(manches):
             x = 1
 
-            for player in range(joueurs):                                       #itere sur tous les joueurs présents
+            for player in range(joueurs):                                       #itere sur tous les joueurs presents
                 player_name = "Joueur" + str(player + 1 )
                 print(player_name)
 
-                for chances in range(6):                                        #itere sue les différentes tentatives pour chaque joueur
+                for chances in range(6):                                        #itere sue les differentes tentatives pour chaque joueur
                     p_word = input('Proposer un mot: ')
                     point = 0
 
-                    if p_word == " " or p_word == "":                           #les essais s'arretent s'il n'y a aucune entrée
+                    if p_word == " " or p_word == "":                           #les essais s'arretent s'il n'y a aucune entree
                         break
 
                     else:
-                        letter_list = generer_grille
-                        validité = False
+                        letter_list = dessiner_grille(taille, Des)
+                        grille = generer_grille(taille, letter_list)
+                        validite = False
 
                         if len(p_word) >= 3:                                                    #est-ce que le mot est de la bonne taille ? (3<= longeur <=taille)
 
-                            present = dans_grille(letter_list, p_word)                          #est-ce qut toutes les lettres du mot proposé sont sur la grille ?
+                            present = dans_grille(letter_list, p_word)                          #est-ce qut toutes les lettres du mot propose sont sur la grille ?
                             #if present != 'False':
-                                #validité = est_valide(letter_list, lettre_1, lettre_2)          #on veut savoir si le mot propossé est valide ou pas
+                                #validite = est_adjacente(grille, lettre_1, lettre_2)          #on veut savoir si le mot proposse est valide ou pas
 
-                        #if validité : 
+                        #if validite : 
                         #    point = calcul_point(letter_list, p_word)                           #si le mot est valide, alors on calcul le nombre de points correspondants
 
-                        #message = valeur(validité)
+                        #message = valeur(validite)
 
                         #print(affichage(p_word, point, message))
                         total_points += point
@@ -259,44 +297,6 @@ def jouer():
     print("Le meilleur joueur est", meilleur_joueur, "avec un score de: ", meilleur_score)
         
     return 
+
+
 #jouer()
-
-def test():
-
-    def test_calcul_point():
-        ma_grille = input("Nth size grid: ")
-        for i in range (4):
-            mot = input('Word: ')
-            point = calcul_point(ma_grille, mot)
-            taille_mot = len(mot)
-            taille_grille = len(ma_grille)
-
-            print("le mot de taille", taille_mot, 'donne', point, 'point(s)', 'pour une grille de taille', taille_grille)
-    test_calcul_point()
-
-    def test_max_points():
-        score = ['jouer1', '13', 'joueur2', '15', 'jouer3', '13', 'joueur4', '15', 'jouer5', '13', 'joueur6', '15']
-        print(max_points(score, 6))
-    
-    def test_dans_grille():
-        grille = 'CQDJAAEKIKSVJTFU'
-        p_word = 'CAST'
-        present = dans_grille(grille, p_word)
-        print(present)
-
-test()
-
-
-#une grille 4x4
-#-----------------
-#| C | Q | D | J |
-#-----------------
-#| A | A | E | K |
-#-----------------
-#| I | K | S | V |
-#-----------------
-#| J | T | F | U |
-#-----------------
-
-
-
