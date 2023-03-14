@@ -17,10 +17,15 @@ def verification(grille,mot):
             else:
                 mots_joueur2(mot)
                 
-def test_verification()
-    assert verification(grille,mot) != mots_refuses,joueur_actuel, mot, "true"
-    assert verification(grille,mot) != mots_acceptes,joueur_actuel, mot, "mot non present sur la grille"
-    assert verification(grille,len(mot)) < 3, joueur_actuel, mot, "Mot trop court"
+def test_validite()
+    assert validite(mot) == mots_refuses, joueur_actuel, mot, "false"
+    assert validite(grille) == mot_refuses, joueur_actuel, mot, "mot non present sur la grille"
+    assert validite(mot) == mot_refuses, joeur_actuel, mot, "Mot déjà proposé"
+    
+def test_taille(mot)
+    assert taille len(mot) < 3, joueur_actuel, mot, "Mot trop court"
+           
+
            
 
 
