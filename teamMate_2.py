@@ -45,7 +45,7 @@ def verification(grille,mot):
 
 def test_grille():
     assert grille(grille) ==found, joueur_actuel,mot "true"
-    assert grille(mot) <3 ==..., joueur_actuel, mot, "Mot trop court"
+    assert grille(len(mot)) <3 ==..., joueur_actuel, mot, "Mot trop court"
     
 def test_affichage():
     assert affichage(point) == "(' +str(point) + ')", point
@@ -58,7 +58,9 @@ def test_validite():
     assert validite(mot) == mot_refuses, joeur_actuel, mot, "Mot déjà proposé"
          
 def test_calcul_point():
-    assert calcul_point(lettre) ==
+    assert calcul_point(lettre) >= 7, joueur_actuel, pts
+    assert calcul_point(len(mot)) >= 9, joueur_actuel, point 
+    assert calcul_point(len(mot)) == longeur, point
     
            
 
