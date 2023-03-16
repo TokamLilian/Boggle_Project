@@ -58,8 +58,8 @@ def test_validite():
     assert validite(mot) == mot_refuses, joeur_actuel, mot, "Mot déjà proposé"
          
 def test_calcul_point():
-    #assert calcul_point(lettre) ==
-    pass
+    assert calcul_point(lettre) ==
+    
            
 
       
