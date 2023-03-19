@@ -14,7 +14,7 @@ def affichage(word, point, valeur):
     return exit_text
 
                                   #pour toutes les grilles de taille 5x5 en decendant, un mot de taille 8 donne 10 points 
-        return point
+    return point
 
 def lettre (alphabet, longeur):                                       #cette fonction retourne une lettre aleatoire de la chaine passee en paramètre
     rand = True

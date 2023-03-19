@@ -28,11 +28,14 @@ def test():
 
     
     def test_dans_grille():
-        grille = 'CQDJAAEKIKSVJTFU'
-        p_word = 'CAST'
-        present = dans_grille(grille, p_word)
-        print(present)
+        grille = [ ['G', 'A', 'W'], ['H', 'G', 'D'], ['G', 'Z', 'I'] ]
+        print(dans_grille(grille, 'GGHAGWIZ'))
+    #test_dans_grille()
 
+    def test_dans_grille():
+        grille = [ ['G', 'A', 'W', 'P'], ['H', 'G', 'D', 'W'], ['K', 'G', 'Z', 'I'], ['H', 'V', 'Q', 'W']]
+        print(dans_grille(grille, 'GGHAGVWIZ'))
+    test_dans_grille()
     
     def test_dans_grille():
         p_word = 'RAVX'
@@ -46,43 +49,6 @@ def test():
         print(Des)
 
     #test_generer_des()
-
-
-    def generer_grille1(taille, letter_list):            #par Lilian
-        grille = [None] * taille
-
-        start = 0
-        end = taille
-        for i in range (taille):
-        
-            end = taille * (i+1)
-
-            grid = []
-            for j in range (start, end):
-                grid.append(letter_list[j])
-                start = j + 1
-
-            grille[i] = grid
-        return grille
-
-
-    def generer_grille(taille, letter_list):            #par Papa
-        grille = [None] * taille
-
-        for i in range (taille):
-            grille[i] = [None] * taille                 #creation de la grille
-
-        for j in range (len(letter_list)):              #parcourir tous les elements de la liste
-
-            row = j // taille                           #division par la largeur de la grille pour avoir le numero de la ligne
-
-            col = j % taille                            #le reste de la division de la position de la lettre et la taille de la grille, donne le numero de la colonne
-
-            grille[row][col] = letter_list[j]
-
-        print(grille)
-        return grille
-    
 
     def test_verification():
         grille = generer_grille(taille, letter_list)
