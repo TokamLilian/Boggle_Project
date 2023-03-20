@@ -2,42 +2,70 @@
 #Ange Lilian Tchomtchoua Tokam
 
 #Boggle.py qui simulte le jeux de boggle à plusieurs joueurs
+
 import random
+def appear(lettre, mot):                                            #cette fonction retourne le nombre de fois qu'une lettre est dans le mot
+    lettre_m = lettre
+    new_mot = ""
+    appear = 0
+    for rem in mot:
+        if lettre_m == rem:
+            appear += 1
+            continue
+        else:
+            new_mot += rem
+    return appear
 
 def dans_grille(grille, mot):                                        #verifie si toutes les lettres du mot propose sont dans la grille
     position_matrix = []                                             #contient toutes les positions où on trouve les lettre du mots propose, dans la grille
     found = 0                                                        #le nombre de lettre trouvees
+    letter_position = 0
 
     for lettre_m in mot:                                             #on cherche si toutes les lettres du mot propose sont dans la grille
+        appear = appear(lettre_g, mot)                                             
         grid_position = 0                                            #la position de la lettre dans la grille
         lettre_g = ""
 
         for row_g in grille:
-           if lettre_g == lettre_m:                                  #on veut s'assurer qu'on ne cherche pas une lettre qui a déjà été trouvée
+            if lettre_g == lettre_m:                                  #on veut s'assurer qu'on ne cherche pas une lettre qui a déjà été trouvée
+               letter_position += 1
                break
            
-           for lettre_g in row_g:
+            for lettre_g in row_g:
                 if lettre_m == lettre_g:
                     
-                    if grid_position in position_matrix:            #si on a déjà trouvé cette lettre à la meme position, on va la chercher dans une autre position de la grille
+                    if grid_position in position_matrix:              #si on a déjà trouvé cette lettre à la meme position, on va la chercher dans une autre position de la grille
                         grid_position += 1
                         continue
+                    
+                    if (letter_position+1) == len(position_matrix) :                    #si on a déjà inscrit la première position de la lettre trouvée
+                        element = position_matrix[letter_position]
+
+                        if type(element) == int:                                        #pour la premiere position de la lettre
+                            element = [element, grid_position -1]                       #on note les positions de cette lettre
+                        else:
+                            element.append(grid_position -1)
+
+                        position_matrix[letter_position] = element
+
                     else:
                         found += 1
                         position_matrix.append(grid_position)
                         grid_position += 1
 
-                        if found == len(mot):                                #si a toutes les lettres proposes figurent dans la grille, alors le mot est present
+                        if found == len(mot) and grid_position >= len(grille)**2 :                                #si a toutes les lettres proposes figurent dans la grille, alors le mot est present
                             return position_matrix                           #on sait que len(position_matrix) == len(mot)
                         
-                        break
+                        #break                #on veut continuer à chercher si jamais il y a une autre lettre_m dans la grille
 
-                if grid_position == (len(grille)**2) - 1:            #si on est à la dernière lettre de la grille et toutes les lettres proposees n'ont pas ete 
-                    if found < len(mot):                             #trouvees, alors on s'arrete
-                        return False
+                #if grid_position == (len(grille)**2) - 1:           #si on est à la dernière lettre de la grille 
+                if letter_position > len(mot) + 1 and found < len(mot):                      #si on est à la dernière lettre du mot
+                                                                     #et toutes les lettres proposees n'ont pas ete trouvees, alors on s'arrete
+                    return False
                 
                 grid_position += 1                                   #lorsqu'on passe a la prochaine lettre
-    return False                                                     #pour tout cas où au moins une lettre du mot n'a pas été trouvée dans la grille
+        letter_position += 1
+    #return False                                                     #pour tout cas où au moins une lettre du mot n'a pas été trouvée dans la grille
 
 
 def get_neighboor(grille, lettre):                                   #cette fonction retourne une liste des lettres adjacentes a la lettre passée en paramètre
@@ -60,6 +88,24 @@ def get_neighboor(grille, lettre):                                   #cette fonc
     return neighboor
 
 
+def est_adjacente(grille, lettre_1, lettre_2):
+
+    #est-ce que les lettre! et lettre_2 sont adjacentes ?
+    
+    neighboor = get_neighboor(grille, lettre_1)
+    #neighboor = [ 'F', 'A', ' G' ]                 #for debugging
+    position = 0
+    return False                                     #JUST for general debigging
+
+    for sample in neighboor:
+        position += 1
+
+        if lettre_2 == sample:
+            return True
+        if position == len(neighboor):
+            return False
+
+
 def verification(grille, word):                                                 #cette fonction appel le teste pour deux lettres consecutives du mot propose
 
     lettres = [ None, None ]
@@ -80,29 +126,10 @@ def verification(grille, word):                                                 
         first += 1 
         last += 1
 
-        if not est_adjacente(grille, lettre_1, lettre_2):
-            return False
-        
+        if not est_adjacente(grille, lettre_1, lettre_2):                       #si les deux lettres ne sont pas adjacentes, on s'arrete
+            return False                                                        #sinon, on continue de verifier si la prochaine est adjacente aussi
     
     return True
-
-
-def est_adjacente(grille, lettre_1, lettre_2):
-
-    #est-ce que les lettre! et lettre_2 sont adjacentes ?
-    
-    neighboor = get_neighboor(grille, lettre_1)
-    #neighboor = [ 'F', 'A', ' G' ]                 #for debugging
-    position = 0
-    return True                                     #JUST for hot debigging
-
-    for sample in neighboor:
-        position += 1
-
-        if lettre_2 == sample:
-            return True
-        if position == len(neighboor):
-            return False
 
 
 def valeur(validite) :                                              #cette fonction retourne le message du resulat après la proposition du joueur
@@ -285,7 +312,7 @@ def jouer():
                 print(player_name)
                 print(" ") 
 
-                for chances in range(6):                                        #itere sue les differentes tentatives pour chaque joueur
+                for chances in range(10):                                        #itere sue les differentes tentatives pour chaque joueur
                     p_word = input('Proposer un mot: ')
                     point = 0
 
@@ -327,4 +354,4 @@ def jouer():
     return 
 
 
-#jouer()
+jouer()
