@@ -49,9 +49,9 @@ def test generer_grille():
     assert affichage(point,valeur) == "(' +str(point) + ')","-- " + valeur, exit_text
                   
 def test_validite():
-    assert validite(mot,joueur_actuel
-    assert validite(mot
-    assert validite(mot
+    assert (est_valid(mot,joueur_actuel,valeur, "ok"))
+         assert (est_valid(mot,joueur_actuel,valeur, "rejete"))
+        assert ((est_valid(mot,joueur_actuel,valeur, "illegal"))
          
 def test_calcul_point():
     assert (calcul_point(4, "ABCD") == 2)
