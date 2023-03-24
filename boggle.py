@@ -1,7 +1,36 @@
-#Sarah Jolia Enombo Ngosso
-#Ange Lilian Tchomtchoua Tokam
+#Sarah Jolia Enombo Ngosso :20241121
+#Ange Lilian Tchomtchoua Tokam :20230129
 
 #Boggle.py qui simulte le jeux de boggle à plusieurs joueurs
+
+Des = [
+        ['E', 'T', 'U', 'K', 'N', 'O'],
+        ['E', 'V', 'G', 'T', 'I', 'N'],
+        ['D', 'E', 'C', 'A', 'M', 'P'],
+        ['I', 'E', 'L', 'R', 'U', 'W'],
+        ['E', 'H', 'I', 'F', 'S', 'E'],
+        ['R', 'E', 'C', 'A', 'L', 'S'],
+        ['E', 'N', 'T', 'D', 'O', 'S'],
+        ['O', 'F', 'X', 'R', 'I', 'A'],
+        ['N', 'A', 'V', 'E', 'D', 'Z'],
+        ['E', 'I', 'O', 'A', 'T', 'A'],
+        ['G', 'L', 'E', 'N', 'Y', 'U'],
+        ['B', 'M', 'A', 'Q', 'J', 'O'],
+        ['T', 'L', 'I', 'B', 'R', 'A'],
+        ['S', 'P', 'U', 'L', 'T', 'E'],
+        ['A', 'I', 'M', 'S', 'O', 'R'],
+        ['E', 'N', 'H', 'R', 'I', 'S'],
+        ['A', 'T', 'S', 'I', 'O', 'U'],
+        ['W', 'I', 'R', 'E', 'B', 'C'],
+        ['Q', 'D', 'A', 'H', 'A', 'U'],
+        ['A', 'C', 'F', 'L', 'N', 'E'],
+        ['P', 'R', 'S', 'T', 'U', 'G'],
+        ['J', 'P', 'R', 'X', 'E', 'Z'],
+        ['E', 'K', 'V', 'Y', 'B', 'E'],
+        ['A', 'L', 'C', 'H', 'E', 'M'],
+        ['E', 'D', 'U', 'F', 'H', 'K']
+    ] 
+
 
 import random
 
@@ -240,10 +269,10 @@ def est_adjacente(grille, word):
     return True
 
 
-def affichage(word, point, valeur):
+def affichage(word, point, valeur):                                      #cette fonction retourne le texte qui va etre imprimé à la fin de chaque chance
 
     point_affiche = ' (' +str(point) + ')' 
-    valeur_affiche = " -- " + str(valeur)                                #valeur est l'issu du mot (rejete ou illegal) retourne par une fonction qui test si le mot existe           
+    valeur_affiche = " -- " + str(valeur)                                #valeur est l'issu du mot (rejete ou illegal) retournée par une fonction qui test si le mot existe           
      
     exit_text = str(word) + str(point_affiche) + str(valeur_affiche)
     return exit_text
@@ -296,7 +325,7 @@ def calcul_point(taille, mot):                                           #cette 
                 return point 
             
 
-def max_points(score, joueurs):
+def max_points(score, joueurs):                                             #cette fonction retourne le meilleur score et le meilleur joueur de la partie
 
     max_point = score[1]                                                    #de base, on pose le meilleur score comme etant celui du premier joueur
     
@@ -368,7 +397,7 @@ def dessiner_grille(taille, grille):
             col = colonne % taille 
             letter = grille[row][col]
 
-            if col == 0:                                                   #pour la première colonne de chaque lignes
+            if col == 0:                                                        #pour la première colonne de chaque lignes
                 word += "| " + letter
 
             else:
@@ -380,77 +409,135 @@ def dessiner_grille(taille, grille):
     print(seperator)
 
 
-def jouer():
-    taille = int(input('Entrer le nombre de lignes souhaite: '))
-    nombre_parties = int(input('Combien de parties souhaitez vous jouer ? '))
-    manches = int(input('En combien de manches souhaitez vous jouer ? '))
-    joueurs = int(input('Combien de joueurs sont presents ? '))
+def correction(donne, msg):                                                     #cette fontion verifie si le mot passé en paramètre est un entier
+    while True:                         
+                                
+        try:                            
+            valeur = int(donne)                                                 #on essaie de voir si c'est un entier
+            return valeur                                                       #si c'est le cas, alors on retourne sa valeur
+        
+        except ValueError:
+            try:
 
+                valeur = float(donne)                                           #on essaie de voir si c'est un réel
+                print('Veuillez entrer uniquement des valeures entières')       #si c'est le cas, alors on demande à l'utilisateur
+                print("")                                                       #de rentrer un valeur entière et on repart verifier 
+                print('Entrer le nombre de', msg,': '); donne = input()         #si c'est un entier qui a été entré
+
+            except ValueError:                                                  #si jamais c'est ni un entier ni un réel, on demande à l'utilisateur 
+                print('Veuillez entrer un nombre entier')
+                print('Entrer le nombre de', msg,': '); donne = input()
+
+
+def jouer():
+    msg=[ 'lignes', 'parties', 'manches', 'joueurs' ]
+    names = []                                                                  #cette liste contient tous les noms des joueurs
+
+    taille = input('Entrer le nombre de lignes: ')
+    taille = correction(taille, msg[0])                                         #on appel la fonction correction pour chaque variable 
+                                                                                #pour s'assurer que les valeurs entrées sont entières
+
+    nombre_parties = input('Entrer le nombre de parties: ')
+    nombre_parties = correction(nombre_parties, msg[1])
+
+    manches = input('Entrer le nombre de manches: ')
+    manches = correction(manches, msg[2])
+
+    joueurs = input('Entrer le nombre de joueurs: ')
+    joueurs = correction(joueurs, msg[3])
+    print("")
+    
+    for player in range(joueurs):
+        name = input('Nom des joueurs à tours de role: ')
+        names.append(name)
+        print('Joueur', player+1, 'enregistré')
+    print("")
+    
     for partie in range(nombre_parties): 
         score = []
-        total_points = 0                                                        #à chaque nouvelle paritie, on a un nouveau nombre de points
-        if partie == 0:                                                         #and taille >= 6 : pour generer les des des grilles de taille 6 en montant, 
-                                                                                #car pour les grilles de taille inferieures à 6, l'enoncé a fourni les dés
+        total_points = [0] * joueurs                                            #le nombre de points totaux de la partie 
 
-            Des = generer_des(taille)                                           #pour les prochaine parties, les des ne doivent pas etre changes
+        if partie == 0 and taille > 5 :                                         #l'enoncé nous ayant fourni 25 dés qui correspondent à une grille de taille maximum 5
+            des_restants = (taille*2) - (len(Des))                              #alors, pour une grile de taille superieure à 5, on génère le nombres dés qu'il nous faut
+
+            for de in range (des_restants):
+                nouveaux_de = generer_des(1)                                    #on veut generer un seul dé à la fois  
+                Des.append(nouveaux_de)                                         #on ajoute le nouveau d2 à la liste Des qui contient les dés du jeux
 
         print('Partie', partie+1)
-        print(" ")   
-
-        grille = generer_grille(taille, Des)                                    #pour toutes les parties, on a une nouvelle grille      
-        print(grille)                                                           #just for further debugging
+        print(" ")
+        grille = generer_grille(taille, Des)                                                                   
         dessiner_grille(taille, grille) 
 
-        for manche in range(manches):
-                                                                                #les points sont cumulés pour chaque manches
-            x = 1                                                               #nous permettra de stocker au meme endroit les points d'un jouer pour une toutes les parties
+        for manche in range(manches):                                           #toutes les manches de la partie avec des points cumulés pour chaque manches
+            print('Manche', manche +1)
+            print(" ")   
 
-            for player in range(joueurs):                                       #itere sur tous les joueurs presents
-                total_points = 0
-                player_name = "Joueur" + str(player + 1 )   
-                print(player_name)
-                print(" ") 
+            for chance in range(10):                                            #chaque joueur a droit à 10 chances
+                print('Chance', chance+1) 
+                print(" ")   
+                step = 1                                                        #nous permet de passer de points à point dans la liste des scores
+                
+                for player in range(joueurs):                                   #la variable player pour les différents joueurs du jeux
+                    
+                    player_name = names[player]                                 #le nom du joueur est à la position de l'indice dans la liste des joueurs
+                    print(player_name)
+                    print(" ") 
 
-                for chances in range(10):                                        #itere sur les differentes tentatives pour chaque joueur
-                    p_word = input('Proposez un mot: ')
+                    p_word = input('Proposez un mot: ')                                             #toutes les lettres du mot proposé doivent etre en majuscules pour
+                    p_word = p_word.upper()                                                         #la comparaison avec les lettres de la grille
                     point = 0
 
-                    if p_word == " " or p_word == "":                            #les essais s'arretent s'il n'y a aucune entree
+                    if p_word == " " or p_word == "" :                                              #les essais du joueur s'arretent s'il n'y a aucune entree 
                         break
 
+                    accepte = input('Est-ce que les autres joueurs acceptent le mot ? [OUI/NON] ')
+                    accepte = accepte.upper()
+
+                    if accepte == 'OUI' or accepte == 'YES' or len(p_word) >= 3:
+
+                        validite = est_adjacente(grille, p_word)                                    #on veut savoir si le mot proposé est valide ou pas
+
+                        if validite :                                                               #si le mot est valide, alors on calcul le nombre
+                            message = 'OK'      
+                            point = calcul_point(taille, p_word)                                    #de points correspondants au mot proposé
+
+                            total_points[player] += point                                           #on additionne le nombre de points pour le jouer
+                                                                                                    #à la poisition qui lui correspond dans total_points
+                
+                        else:
+                            message = 'Illegal'                                                     #le message qu'on imprimera pour le mot non valide
+                            
                     else:
-                        validite = False
+                        message = 'Rejete'                                                          #le message qu'on imprimera pour un mot rejété par les autre joueurs
 
-                        if len(p_word) >= 3 and len(p_word) <= (taille**2) :                    #est-ce que le mot est de la bonne taille ? (3<= longueur <=taille**2)                                    
+                    print(affichage(p_word, point, message))                                        #la ligne qu'on imprime pour
+                    print("")
                         
-                            validite = est_adjacente(grille, p_word)                            #on veut savoir si le mot proposse est valide ou pas
+                if chance == 0 and manche == 0 :                                                    
+                                                                                                    #pour la première manche et la première chance, 
+                    for player in range(joueurs):                                                   #parce que la liste "score" est vide, on stocke
+                        score.append(names[player])                                                 #à la fois les noms des joueurs et le nombre total de points
+                        score.append(total_points[player]) 
 
-                            if validite :                                                       #si le mot est valide, alors on calcul le nombre
-                                message = 'ok'
-                                point = calcul_point(taille, p_word)                            #de points correspondants au mot proposé
+                else:   
+                    
+                    for player in range(joueurs): 
+                            position = player + step                                                #la position du score du jouer est à l'indice du jouer plus le pas qu'il 
+                            score[position] = total_points[player]                                  #faut pour y arriver et on stocke le nombre total de points du joueur 
+                            step += 1                                                               #actuel dans la liste "score" et on prend un plus grand pas dans 'Score'
 
-                            else:
-                                message = 'Illegal'                                             #le message qu'on imprimera pour le mot non valide                                                          
+                for player in range(joueurs):                                                       #on imprime le score de chaque joueur et son total de points
+                    print(names[player], 'Score: ', total_points[player] )        
+                    print("")                                                   
 
-                        print(affichage(p_word, point, message))
-                        total_points += point
+        meilleur_score  = max_points(score, joueurs)[0]                                             #le meilleur joueur et son score de la partie
+        meilleur_joueur = max_points(score, joueurs)[1]
 
-                if manche == 0 :
-                    score.append(player_name)                                                   #cette liste stocke à la fois les noms des joueurs 
-                    score.append(total_points)                                                  #et le nombre total de points, pour d'autres utilisations
-                else:               
-                    score[player + x] += total_points                                           #le nombre total de points du joueur actuel dans la liste "score"
-                    x += 1
+        print("Le meilleur joueur est", meilleur_joueur, "avec un score de: ", meilleur_score)
+        print("")
 
-                print(player_name, 'Score: ', total_points )
-                print("")
-
-    meilleur_score  = max_points(score, joueurs)[0]
-    meilleur_joueur = max_points(score, joueurs)[1]
-
-    print("Le meilleur joueur est", meilleur_joueur, "avec un score de: ", meilleur_score)
-        
-    return 
+    return
 
 
-#jouer()
+jouer()
