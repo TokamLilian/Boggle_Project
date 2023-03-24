@@ -53,15 +53,15 @@ def test_affichage():
     assert affichage(point,valeur) == "(' +str(point) + ')","-- " + valeur, exit_text
                   
 def test_validite():
-    assert validite(mot) == mots_refuses, joueur_actuel, mot, "false"
-    assert validite(grille) == mot_refuses, joueur_actuel, mot, "mot non present sur la grille"
-    assert validite(mot) == mot_refuses, joeur_actuel, mot, "Mot déjà proposé"
+    assert validite(mot) == 
+    assert validite(grille) == 
+    assert validite(mot) == 
          
 def test_calcul_point():
-    assert calcul_point(lettre) >= 7, joueur_actuel, pts
-    assert calcul_point(len(mot)) >= 9, joueur_actuel, point 
-    assert calcul_point(len(mot)) == longeur, point
-    
+    assert (calcul_point(4, "ABCD") == 2)
+        assert (calcul_point(5, "ABCDE") == 3)
+        assert (calcul_point(6, "ABCDEF") == 4)
+        assert (calcul_point(7, "ABCDEFG") ==7)
            
 
       
