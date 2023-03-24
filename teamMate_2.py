@@ -42,26 +42,28 @@ def verification(grille,mot):
                 mots_joueur1(mot)
           else:
                 mots_joueur2(mot)
-
-def test_grille():
-    assert grille(grille) ==found, joueur_actuel,mot "true"
-    assert grille(len(mot)) <3 ==..., joueur_actuel, mot, "Mot trop court"
     
-def test_affichage():
+def test generer_grille():
     assert affichage(point) == "(' +str(point) + ')", point
     assert affichage(valeur) == "-- " + valeur, valeur
     assert affichage(point,valeur) == "(' +str(point) + ')","-- " + valeur, exit_text
                   
 def test_validite():
-    assert validite(mot) == mots_refuses, joueur_actuel, mot, "false"
-    assert validite(grille) == mot_refuses, joueur_actuel, mot, "mot non present sur la grille"
-    assert validite(mot) == mot_refuses, joeur_actuel, mot, "Mot déjà proposé"
+    assert (validite(mot,joueur_actuel,valeur, "ok"))
+         assert (validite(mot,joueur_actuel,valeur, "rejete"))
+        assert ((validite(mot,joueur_actuel,valeur, "illegal"))
          
 def test_calcul_point():
-    assert calcul_point(lettre) >= 7, joueur_actuel, pts
-    assert calcul_point(len(mot)) >= 9, joueur_actuel, point 
-    assert calcul_point(len(mot)) == longeur, point
-    
+    assert (calcul_point(4, "ABCD") == 2)
+        assert (calcul_point(5, "ABCDE") == 3)
+        assert (calcul_point(6, "ABCDEF") == 4)
+        assert (calcul_point(7, "ABCDEFG") ==7)
+        
+def test_est_adjacente():
+         grille = [ ['T', 'I', 'M', 'E'], ['W', 'O', 'R', 'D'], ['F', 'A', 'C', 'T'], ['G', 'A', 'M', 'E']] 
+         assert (est_adjacente(grille, 'TIME') == True
+         assert (est_adjacente(grille, 'TOCE') == True
+         assert ((est_adjacente(grille, 'TODE') == False
            
 
       
