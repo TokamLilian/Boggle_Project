@@ -127,3 +127,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+new_jouer.py
+adjacence.py
+test_.py
