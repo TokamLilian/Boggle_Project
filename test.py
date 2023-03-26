@@ -76,4 +76,4 @@ test()
 #     def test_neg(self):
 #         with self.assertRaises(IndexError):
 #             generer_grille(-4, Des)
-#     test_neg(test)
+#     test_neg(self)
