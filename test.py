@@ -20,6 +20,8 @@ def test():
             for i in range(5): 
                 assert(len(grille[i])) == 5                                 #toutes les lignes d'une grille sont de taille égale à la taille de la grille
 
+        test_longuer_ligne()
+
         assert(generer_grille(-4, Des)) == None                             #pour une valeur de taille non valide, on ne retourne rien
 
     test_generer_grille()
